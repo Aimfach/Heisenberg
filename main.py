@@ -1,11 +1,37 @@
 from flask import Flask, request, render_template
 
 # raspberry pi
+import time
+import RPi.GPIO as GPIO
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+
+print("hi")
+p = GPIO.PWM(23, 1000)
+g = GPIO.PWM(24, 1000)
+p.start(0)
+g.start(0)
+
+
+
+
 
 
 def set_power(power):
-    print(power)
-
+    power = int(power)
+    try:
+        p.ChangeDutyCycle(power)
+        g.ChangeDutyCycle(power)
+        print(power)                
+    except KeyboardInterrupt:
+        pass
+        p.stop()
+        g.stop()
+        GPIO.cleanup()
+    
 
 def set_light(light):
     print(light)
@@ -37,5 +63,5 @@ def handler():
 
 
 if __name__ == "__main__":
-    app.run("192.168.178.26", 8080, debug=True)
+    app.run("0.0.0.0", 8000)
 

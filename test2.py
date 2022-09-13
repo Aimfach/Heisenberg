@@ -18,11 +18,11 @@ try:
         for dc in range(0, 101, 1):
             p.ChangeDutyCycle(dc)
             g.ChangeDutyCycle(dc)
-            time.sleep(0.001)
+            time.sleep(0.01)
         for dc in range(100, -1, -1):
             p.ChangeDutyCycle(dc)
             g.ChangeDutyCycle(dc)
-            time.sleep(0.001)
+            time.sleep(0.01)
                     
 except KeyboardInterrupt:
     pass

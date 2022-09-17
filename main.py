@@ -4,38 +4,80 @@ from flask import Flask, request, render_template
 import time
 import RPi.GPIO as GPIO
 
-
 GPIO.setmode(GPIO.BCM)
+
+frequency = 1000
+
+headlight = [[]]
+# head left
+GPIO.setup(2, GPIO.OUT)
+GPIO.setup(3, GPIO.OUT)
+GPIO.setup(4, GPIO.OUT)
+headlight[0][0] = GPIO.PWM(2, frequency)
+headlight[0][1] = GPIO.PWM(3, frequency)
+headlight[0][2] = GPIO.PWM(4, frequency)
+
+# head right
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
+GPIO.setup(18, GPIO.OUT)
+headlight[1][0] = GPIO.PWM(14, frequency)
+headlight[1][1] = GPIO.PWM(15, frequency)
+headlight[1][2] = GPIO.PWM(18, frequency)
+
+# backlight
+backlight = []
+GPIO.setup(17, GPIO.OUT)
+GPIO.setup(27, GPIO.OUT)
+GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
-GPIO.setup(26, GPIO.OUT)
-GPIO.setup(12, GPIO.OUT)
-GPIO.setup(17, GPIO.OUT)
-print("hi")
-p = GPIO.PWM(23, 1000)
-g = GPIO.PWM(24, 1000)
-u = GPIO.PWM(26, 1000)
-a = GPIO.PWM(12, 1000)
-i = GPIO.PWM(17, 1000)
-p.start(0)
-g.start(0)
-u.start(0)
-a.start(0)
-i.start(0)
+GPIO.setup(10, GPIO.OUT)
+GPIO.setup(9, GPIO.OUT)
+GPIO.setup(11, GPIO.OUT)
+backlight[0] = GPIO.PWM(17, frequency)
+backlight[1] = GPIO.PWM(27, frequency)
+backlight[2] = GPIO.PWM(22, frequency)
+backlight[3] = GPIO.PWM(23, frequency)
+backlight[4] = GPIO.PWM(24, frequency)
+backlight[5] = GPIO.PWM(10, frequency)
+backlight[6] = GPIO.PWM(9, frequency)
+backlight[7] = GPIO.PWM(11, frequency)
+
+# motors
+GPIO.setup(20, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT)
+f_motor = GPIO.PWM(20, frequency)
+b_motor = GPIO.PWM(21, frequency)
+
+
+def start(GPIO):
+    GPIO.start(0)
+
+
+# headlight
+for i in range(len(headlight[0])):
+    start(headlight[0][i])
+
+for a in range(len(headlight[1])):
+    start(headlight[1][a])
+
+for j in range(len(backlight)):
+    start(backlight[j])
+
+start(f_motor)
+start(b_motor)
 
 
 def set_power(power):
     power = int(power)
     try:
-        p.ChangeDutyCycle(power)
-        g.ChangeDutyCycle(power/2)
-        u.ChangeDutyCycle(power-10)
-        a.ChangeDutyCycle(power-30)
-        i.ChangeDutyCycle(power/3)
+        #p.ChangeDutyCycle(power)
         print(power)
     except KeyboardInterrupt:
         pass
-        p.stop()
+        #p.stop()
+
 
 def set_light(light):
     print(light)
@@ -43,7 +85,9 @@ def set_light(light):
 
 def set_horn(horn):
     print(horn)
-#todo play sound when charged
+
+
+# todo play sound when charged
 
 
 def handle_request(request):
@@ -70,4 +114,9 @@ def handler():
 if __name__ == "__main__":
     app.run("0.0.0.0", 8000)
     app.run("192.168.178.26", 8000, debug=True)
+
+# todo usb Port an aus
+# todo wlan erstellen
+# todo autostart
+# todo den hintergrund
 

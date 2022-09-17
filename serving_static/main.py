@@ -120,4 +120,5 @@ if __name__ == "__main__":
 # todo wlan erstellen
 # todo autostart
 # todo den hintergrund
-
+# todo enable led
+# https://ios.gadgethacks.com/how-to/turn-any-website-into-full-screen-app-your-iphone-0384426/

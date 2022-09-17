@@ -1,5 +1,12 @@
 function sendData(){
-    data = {
+    //progressbar
+    let max = document.getElementById("speed").max;
+    let min = document.getElementById("speed").min;
+    let valueS = document.getElementById("speed").value;
+    let value = (valueS-min)/(max-min)*100
+    document.getElementById("speed").style.background = 'linear-gradient(to right, #FFF 0%, #82CFD0 ' + value + '%, #fff ' + value + '%, white 100%)'
+
+    let data = {
         power: document.getElementById("speed").value,
         horn: "on",
         light: "on"

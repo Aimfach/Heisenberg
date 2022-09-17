@@ -10,25 +10,28 @@ if (raspberry_pi):
 
     frequency = 1000
 
-    headlight = [[]]
+
     # head left
     GPIO.setup(2, GPIO.OUT)
     GPIO.setup(3, GPIO.OUT)
     GPIO.setup(4, GPIO.OUT)
-    headlight[0][0] = GPIO.PWM(2, frequency)
-    headlight[0][1] = GPIO.PWM(3, frequency)
-    headlight[0][2] = GPIO.PWM(4, frequency)
 
     # head right
     GPIO.setup(14, GPIO.OUT)
     GPIO.setup(15, GPIO.OUT)
     GPIO.setup(18, GPIO.OUT)
-    headlight[1][0] = GPIO.PWM(14, frequency)
-    headlight[1][1] = GPIO.PWM(15, frequency)
-    headlight[1][2] = GPIO.PWM(18, frequency)
+    headlight = [
+        GPIO.PWM(2, frequency),
+        GPIO.PWM(3, frequency),
+        GPIO.PWM(4, frequency),
+        GPIO.PWM(14, frequency),
+        GPIO.PWM(15, frequency),
+        GPIO.PWM(18, frequency)
+    ]
+
+
 
     # backlight
-    backlight = []
     GPIO.setup(17, GPIO.OUT)
     GPIO.setup(27, GPIO.OUT)
     GPIO.setup(22, GPIO.OUT)
@@ -37,14 +40,17 @@ if (raspberry_pi):
     GPIO.setup(10, GPIO.OUT)
     GPIO.setup(9, GPIO.OUT)
     GPIO.setup(11, GPIO.OUT)
-    backlight[0] = GPIO.PWM(17, frequency)
-    backlight[1] = GPIO.PWM(27, frequency)
-    backlight[2] = GPIO.PWM(22, frequency)
-    backlight[3] = GPIO.PWM(23, frequency)
-    backlight[4] = GPIO.PWM(24, frequency)
-    backlight[5] = GPIO.PWM(10, frequency)
-    backlight[6] = GPIO.PWM(9, frequency)
-    backlight[7] = GPIO.PWM(11, frequency)
+    backlight = [
+        GPIO.PWM(17, frequency),
+        GPIO.PWM(27, frequency),
+        GPIO.PWM(22, frequency),
+        GPIO.PWM(23, frequency),
+        GPIO.PWM(24, frequency),
+        GPIO.PWM(10, frequency),
+        GPIO.PWM(9, frequency),
+        GPIO.PWM(11, frequency)
+    ]
+
 
     # motors
     GPIO.setup(20, GPIO.OUT)
@@ -58,11 +64,8 @@ if (raspberry_pi):
 
 
     # headlight
-    for i in range(len(headlight[0])):
-        start(headlight[0][i])
-
-    for a in range(len(headlight[1])):
-        start(headlight[1][a])
+    for i in range(len(headlight)):
+        start(headlight[i])
 
     for j in range(len(backlight)):
         start(backlight[j])

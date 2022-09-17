@@ -19,13 +19,18 @@
     <input class="power" type="range" id="speed" name="speed"
            min="0" max="100" value="0" step="1" orient="vertical" oninput="sendData()">
     <label for="speed"></label>
+    <script type="text/javascript">
+        document.getElementById("speed").oninput = function() {
 
+        };
+    </script>
 
 </div>
 <div class="buttons">
   <button class="horn">hup! hup!</button>
   <button class="light">Light</button>
 </div>
+
 
 
 

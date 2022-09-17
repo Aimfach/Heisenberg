@@ -1,7 +1,16 @@
 from flask import Flask, request, render_template
+from playsound import playsound
+from pydub import AudioSegment
+from pydub.playback import play
+import sys
+sys.path.append('/path/to/ffmpeg')
+
 
 # raspberry pi
 import time
+
+light = True
+
 raspberry_pi = False
 if (raspberry_pi):
     import RPi.GPIO as GPIO
@@ -85,10 +94,20 @@ def set_power(power):
 
 
 def set_light(light):
+    if light == "on":
+        pass
+        #todo set light on
     print(light)
 
 
 def set_horn(horn):
+    print("here")
+    if horn == "on":
+        print("play")
+        #song = AudioSegment.from_mp3('warning.mp3')
+        #play(song)
+
+        # todo set sound
     print(horn)
 
 

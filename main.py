@@ -11,7 +11,6 @@ GPIO.setup(24, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(12, GPIO.OUT)
 GPIO.setup(17, GPIO.OUT)
-
 print("hi")
 p = GPIO.PWM(23, 1000)
 g = GPIO.PWM(24, 1000)
@@ -25,10 +24,6 @@ a.start(0)
 i.start(0)
 
 
-
-
-
-
 def set_power(power):
     power = int(power)
     try:
@@ -37,16 +32,10 @@ def set_power(power):
         u.ChangeDutyCycle(power-10)
         a.ChangeDutyCycle(power-30)
         i.ChangeDutyCycle(power/3)
-        print(power)                
+        print(power)
     except KeyboardInterrupt:
         pass
         p.stop()
-        g.stop()
-        u.stop()
-        a.stop()
-        i.stop()
-        GPIO.cleanup()
-    
 
 def set_light(light):
     print(light)
@@ -55,6 +44,7 @@ def set_light(light):
 def set_horn(horn):
     print(horn)
 #todo play sound when charged
+
 
 def handle_request(request):
     set_power(request['power'])
@@ -79,4 +69,5 @@ def handler():
 
 if __name__ == "__main__":
     app.run("0.0.0.0", 8000)
+    app.run("192.168.178.26", 8000, debug=True)
 

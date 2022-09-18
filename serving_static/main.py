@@ -2,6 +2,7 @@ from flask import Flask, request, render_template
 from playsound import playsound
 from pydub import AudioSegment
 from pydub.playback import play
+from threading import Thread
 import sys
 sys.path.append('/path/to/ffmpeg')
 
@@ -83,6 +84,83 @@ if (raspberry_pi):
     start(b_motor)
 
 
+def start_in_sec(sec, light):
+    for i in range(100):
+        #light.ChangeDutyCycle(i)
+        #print(i)
+        time.sleep(sec/100)
+
+
+def stop_in_sec(sec, light):
+    for i in range(100):
+        #light.ChangeDutyCycle(100-i)
+        #print(100-i)
+        time.sleep(sec/100)
+
+
+def start_head():
+    # start upper ones
+    Thread(target=start_in_sec(1, "light1")).start()
+    Thread(target=start_in_sec(1, "light4")).start()
+    time.sleep(1)
+    Thread(target=stop_in_sec(1, "light1")).start()
+    Thread(target=stop_in_sec(1, "light4")).start()
+
+    # second
+    Thread(target=start_in_sec(1, "light2")).start()
+    Thread(target=start_in_sec(1, "light5")).start()
+    time.sleep(1)
+    Thread(target=stop_in_sec(1, "light2")).start()
+    Thread(target=stop_in_sec(1, "light5")).start()
+
+    # third
+    Thread(target=start_in_sec(1, "light3")).start()
+    Thread(target=start_in_sec(1, "light6")).start()
+    time.sleep(1)
+    Thread(target=start_in_sec(1, "light2")).start()
+    Thread(target=start_in_sec(1, "light5")).start()
+    time.sleep(1)
+    Thread(target=start_in_sec(1, "light1")).start()
+    Thread(target=start_in_sec(1, "light4")).start()
+
+
+def start_back():
+    Thread(target=start_in_sec(1, "light4")).start()
+    Thread(target=start_in_sec(1, "light5")).start()
+    time.sleep(1)
+    Thread(target=stop_in_sec(1, "light4")).start()
+    Thread(target=stop_in_sec(1, "light5")).start()
+
+    Thread(target=start_in_sec(1, "light3")).start()
+    Thread(target=start_in_sec(1, "light6")).start()
+    time.sleep(1)
+    Thread(target=stop_in_sec(1, "light3")).start()
+    Thread(target=stop_in_sec(1, "light6")).start()
+
+    Thread(target=start_in_sec(1, "light2")).start()
+    Thread(target=start_in_sec(1, "light7")).start()
+    time.sleep(1)
+    Thread(target=stop_in_sec(1, "light2")).start()
+    Thread(target=stop_in_sec(1, "light7")).start()
+
+    Thread(target=start_in_sec(1, "light1")).start()
+    Thread(target=start_in_sec(1, "light8")).start()
+
+    Thread(target=start_in_sec(1, "light2")).start()
+    Thread(target=start_in_sec(1, "light7")).start()
+
+    Thread(target=start_in_sec(1, "light3")).start()
+    Thread(target=start_in_sec(1, "light6")).start()
+
+    Thread(target=start_in_sec(1, "light4")).start()
+    Thread(target=start_in_sec(1, "light5")).start()
+
+
+def start_lights():
+    Thread(target=start_head).start()
+    Thread(target=start_back).start()
+
+
 def set_power(power):
     power = int(power)
     try:
@@ -94,8 +172,8 @@ def set_power(power):
 
 
 def set_light(light):
-    if light == "on":
-        pass
+    if light == "change":
+        start_lights()
         #todo set light on
     print(light)
 

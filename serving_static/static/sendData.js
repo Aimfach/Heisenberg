@@ -4,7 +4,7 @@ function sendData(horn, light){
     let min = document.getElementById("speed").min;
     let valueS = document.getElementById("speed").value;
     let value = (valueS-min)/(max-min)*100
-    document.getElementById("speed").style.background = 'linear-gradient(to right, #FFF 0%, #82CFD0 ' + value + '%, #fff ' + value + '%, white 100%)'
+    document.getElementById("speed").style.background = 'linear-gradient(to right, var(--backgroundObject) 0%, rgba(130, 207, 208, 1) ' + value + '%, var(--backgroundObject) ' + value + '%, var(--backgroundObject) 100%)'
 
 
     let data = {

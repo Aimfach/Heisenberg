@@ -1,6 +1,12 @@
+:root{
+    --background: rgba(51, 51, 51, 1);
+    --backgroundObject: rgba(51, 51, 51, 0.2);
+    --fontColor: #AAA
+}
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
     margin: 0;
+    background: var(--background);
 }
 .container{
     display:flex;
@@ -11,6 +17,14 @@ body {
     height: 10vh;
     font-size: 3.5rem;
     text-align: center;
+    color: var(--fontColor);
+    padding-top: 0;
+}
+.headerTitle{
+    margin: 0;
+    font-size: 4rem;
+    padding-top: 0.4em;
+    font-weight: 250;
 }
 .powerContainer{
     height: 80vh;
@@ -19,16 +33,18 @@ body {
 }
 .power[type=range][orient=vertical]{
     -webkit-appearance: none; /* Chromium */
-    transform: rotate(270deg) translateX(-35%);
-    width: 90%;
-    height: 30%;
+    transform: rotate(270deg) translateX(-30vh);
+    width: 65vh;
+    height: 20em;
     padding: 0 5px;
     overflow: hidden;
-    background: linear-gradient(to right, #FFF 0%, #82CFD0 00%, #fff 00%, #fff 100%);
+    background: linear-gradient(to right, var(--backgroundObject) 0%, rgba(130, 207, 208, 1) 00%, var(--backgroundObject) 00%, var(--backgroundObject) 100%);
     border: solid 0.1rem #82CFD0;
     border-radius: 5vh;
     outline: none;
-    transition: background 450ms ease-in;
+    /*transition: background 450ms ease-in; todo immer emoji mittig zentzrieren*/
+    backdrop-filter: blur(0.25em);
+    -webkit-backdrop-filter: blur(0.25em);
 }
 .power::-webkit-slider-thumb {
     opacity: 0
@@ -74,6 +90,24 @@ button{
     border: none;
     height: 8vh;
     width: 8vh;
-    background: #82CFD0;
-    opacity: 0.5;
+    background: rgba(130, 207, 208, 0.5);
+    opacity: 1;
+    font-size: 4em;
+}
+.backgroundWrapper{
+    position: absolute;
+    z-index: -1;
+    height: 100vh;
+    width:100vw;
+}
+
+
+.particle{
+    width: 1rem;
+    height: 1rem;
+    background: white;
+    border-radius: 100%;
+    position: absolute;
+    right: 50vh;
+    bottom: 50vw;
 }

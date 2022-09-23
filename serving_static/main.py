@@ -5,15 +5,21 @@ from pydub.playback import play
 from threading import Thread
 import sys
 sys.path.append('/path/to/ffmpeg')
+from playsound import playsound
+playsound('starting.mp3')
+import subprocess
 
 
+light_on = False
+is_charging = False
 # raspberry pi
 import time
 
-light = True
 
 raspberry_pi = False
 if (raspberry_pi):
+
+
     import RPi.GPIO as GPIO
 
     GPIO.setmode(GPIO.BCM)
@@ -69,8 +75,8 @@ if (raspberry_pi):
     b_motor = GPIO.PWM(21, frequency)
 
 
-    def start(GPIO):
-        GPIO.start(0)
+def start(GPIO):
+    GPIO.start(0)
 
 
     # headlight
@@ -84,6 +90,8 @@ if (raspberry_pi):
     start(b_motor)
 
 
+
+
 def start_in_sec(sec, light):
     for i in range(100):
         #light.ChangeDutyCycle(i)
@@ -93,9 +101,17 @@ def start_in_sec(sec, light):
 
 def stop_in_sec(sec, light):
     for i in range(100):
-        #light.ChangeDutyCycle(100-i)
+        light.ChangeDutyCycle(100-i)
         #print(100-i)
         time.sleep(sec/100)
+
+
+def stop_lights():
+    for i in range(len(headlight)):
+        stop_in_sec(0.5, headlight[i])
+
+    for i in range(len(backlight)):
+        stop_in_sec(0.5, backlight[i])
 
 
 def start_head():
@@ -166,36 +182,53 @@ def set_power(power):
     try:
         #p.ChangeDutyCycle(power)
         print(power)
+        if power == 100:
+            playsound('winning.mp3')
+            playsound('wii winner.mp3')
+
+
+
     except KeyboardInterrupt:
         pass
         #p.stop()
 
 
-def set_light(light):
-    if light == "change":
+def set_light(light, light_on=False):
+    #from main import light_on
+    #light_on = False
+
+
+    if light == "change" and not light_on:
         start_lights()
-        #todo set light on
-    print(light)
+        light_on = True
+    if light == "change" and light_on:
+        stop_lights()
+        light_on = False
 
 
 def set_horn(horn):
-    print("here")
     if horn == "on":
-        print("play")
-        #song = AudioSegment.from_mp3('warning.mp3')
-        #play(song)
-
-        # todo set sound
+        playsound('horn.mp3')
+        # pip3 install PyObjC
     print(horn)
 
 
-# todo play sound when charged
+def set_charge(charge, is_charging):
+    print(charge)
+    if charge == "charge" and not is_charging:
+        playsound('charging.mp3')
+        subprocess.run(["stopUSB.sh", "--input_file=input.txt"])
+        is_charging = True
+    if charge == "charge" and is_charging:
+        subprocess.run(["startUSB.sh", "--input_file=input.txt"])
+        is_charging = False
 
 
 def handle_request(request):
     set_power(request['power'])
-    set_light(request['light'])
+    set_light(request['light'], light_on)
     set_horn(request['horn'])
+    set_charge(request['charge'], is_charging)
 
 
 # server

@@ -1,4 +1,4 @@
-function sendData(horn, light){
+function sendData(horn, light, charge){
     //progressbar
     let max = document.getElementById("speed").max;
     let min = document.getElementById("speed").min;
@@ -10,7 +10,8 @@ function sendData(horn, light){
     let data = {
         power: document.getElementById("speed").value,
         horn: horn,
-        light: light
+        light: light,
+        charge: charge
     }
     $.ajax({
         url: '/',

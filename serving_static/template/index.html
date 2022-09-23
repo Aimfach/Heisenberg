@@ -12,15 +12,28 @@
 
 
 <div class="backgroundWrapper">
-    <div class="particle particle-1"></div>
-    <div class="particle particle-2"></div>
-    <div class="particle particle-3"></div>
-    <div class="particle particle-4"></div>
+    <div class="blobWrapper">
+        <svg viewBox="0 0 200 200" id="blob">
+            <defs>
+                <linearGradient id="gradient" gradientTransform="rotate(90)">
+                    <stop id="gradientStop1" offset="0%" stop-color="var(--startColor)" />
+                    <stop id="gradientStop2 " offset="100%" stop-color="var(--stopColor)" />
+                </linearGradient>
+            </defs>
+            <path d="" fill="url('#gradient')"></path>
+        </svg>
+        <!--
+
+        -->
+        <script type="module" src="../static/blob.js"></script>
+
+    </div>
+
 </div>
 
 <div class="header">
 
-    <h1 class="headerTitle">Steuerung</h1>
+    <h1 class="headerTitle">Heisenberg</h1>
 </div>
 <div class="powerContainer">
 
@@ -31,8 +44,9 @@
 
 </div>
 <div class="buttons">
-  <button class="horn" onclick="sendData('on', 'no')">🔊</button>
-  <button class="light" onclick="sendData('no', 'change')">💡</button>
+  <button class="horn" onclick="sendData('on', 'no', 'no')">🔊</button>
+  <button class="charge" onclick="sendData('no', 'no', 'charge')">🔋</button>
+  <button class="light" onclick="sendData('no', 'change', 'no')">💡</button>
 </div>
 
 
